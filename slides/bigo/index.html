@@ -3,24 +3,357 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="Big O Notation">
+    <meta name="author" content="Kapil Sachdeva">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/headjs/0.96/head.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/css/reveal.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/css/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/css/zenburn.css">
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/js/reveal.min.js"></script>
+
     <title>Big O</title>
 </head>
 
 <body>
+
     <div class="reveal">
         <div class="slides">
-            <section>Slide 1</section>
-            <section>Slide 2</section>
+            <section>
+                <h1>Big O</h1>
+                <h4>Determining efficiency of an Algorithm</h4>
+                <p>
+                    <small>Created by <a href="http://github.com/ksachdeva">Kapil Sachdeva</a> / <a href="http://twitter.com/ksachdeva">@ksachdeva</a></small>
+                </p>
+            </section>
+
+            <section>
+                <h2>Efficiency of an Algorithm</h2>
+                <ul>
+                    <li class="fragment">How much time it takes to run ?</li>
+                    <li class="fragment">How much memory it consumes or require ?</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Time it takes to run ?</h2>
+                <ul>
+                    <li>Number of cores/processors on machine</li>
+                    <li>Read/Write speed to memory</li>
+                    <li>32-bit vs 64-bit</li>
+                    <li class="fragment highlight-blue">Input</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Big O</h2>
+                <p>Rate of growth of time of an algorithm with respect to the input</p>
+                <p class="fragment highlight-red">Why 'O' ?, Why not 'X' ?</p>
+                <p class="fragment">O = Order of function</p>
+            </section>
+
+            <section>
+                <h2>Define a Machine Model</h2>
+                <ul>
+                    <li class="fragment">1 unit of time for arithmetic and logical operation</li>
+                    <li class="fragment">1 unit of time for assignment</li>
+                    <li class="fragment">1 unit of time for return</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Example</h2>
+                <pre>
+                  <code class="hljs" data-trim contenteditable>
+function sum(a, b) {
+  return a + b;
+}
+                  </code>
+                </pre>
+                <p>Unit of work here is <span class="fragment highlight-green">2</span></p>
+                <p class="fragment">Time taken will always be constant irrespective of input</p>
+            </section>
+
+            <section>
+                <h2>Example 2</h2>
+                <pre>
+                <code class="hljs" data-trim contenteditable>
+function total(list) {
+  let total = 0;
+  for(let i = 0; i < list.length; i++) {
+    total = total + list[i];
+  }
+  return total;
+}
+                </code>
+              </pre>
+                <p class="fragment">Time taken depends on size of input</p>
+            </section>
+
+            <section>
+                <h2>Example 3</h2>
+                <pre>
+                <code class="hljs" data-trim contenteditable>
+function totalStopIf6(list) {
+  let total = 0;
+  for(let i = 0; i < list.length; i++) {
+    if (list[i] === 6) {
+      break;
+    }
+    total = total + list[i];
+  }
+  return total;
+}
+                </code>
+              </pre>
+                <p>What is the growth of rate here ?</p>
+            </section>
+
+            <section>
+                <h2>Big O</h2>
+                <p>Always is about the worst case</p>
+                <p class="fragment">Think if 6 was at the last index</p>
+            </section>
+
+            <section>
+                <h2>Big O rules</h2>
+                <p class="fragment">Always is about the worst case</p>
+                <p class="fragment">Ignore the constants</p>
+            </section>
+
+            <section>
+                <h2>Example 4</h2>
+                <pre>
+                  <code class="hljs" data-trim contenteditable>
+  function MinMax1(list) {
+    const n = list.length;
+    let min = 0;
+    let max = 1000;
+    for(let i=0; i< n; i++) {
+      if (list[i] < min) min = list[i];
+      if (list[i] > max) max = list[i];
+    }
+  }
+
+  function MinMax2(list) {
+    const n = list.length;
+    let min = 0;
+    let max = 1000;
+    for(let i=0; i< n; i++) {
+      if (list[i] < min) min = list[i];
+    }
+    for(let i=0;i< n; i++) {
+      if (list[i] > max) max = list[i];
+    }
+  }
+                  </code>
+                </pre>
+                <p>What is the growth of rate here ? n and 2n respectively ?</p>
+                <p class="fragment">We will still say both of them are O(n)</p>
+            </section>
+
+            <section>
+                <h2>Example 5</h2>
+                <pre>
+                  <code class="hljs" data-trim contenteditable>
+  function nestedLoop(list) {
+    const n = list.length;
+    for(let i=0; i< n; i++) {
+      for(let j=0; j< n; j++) {
+        console.log(i*j);
+      }
+    }
+  }
+
+                  </code>
+                </pre>
+                <p>What is the growth of rate here ?</p>
+                <p class="fragment">O(\(n^2)\)</p>
+
+            </section>
+
+            <section>
+                <h2>Example 6</h2>
+                <pre>
+                  <code class="hljs" data-trim contenteditable>
+  function nestedLoop(list1, list2) {
+    const a = list1.length;
+    const b = list2.lenght;
+    for(let i=0; i< a; i++) {
+      for(let j=0; j< b; j++) {
+        console.log(i*j);
+      }
+    }
+  }
+
+                  </code>
+                </pre>
+                <p>What is the growth of rate here ?</p>
+                <p class="fragment">O(a*b)</p>
+
+            </section>
+
+            <section>
+                <h2>Example 7</h2>
+                <pre>
+                  <code class="hljs" data-trim contenteditable>
+  function nestedLoop(list1, list2) {
+    const n = list.length;
+    for(let i=0; i< n; i++) {
+      console.log(i+1);
+    }
+
+    for(let i=0; i< n; i++) {
+      for(let j=0; j< n; j++) {
+        console.log(i*j);
+      }
+    }
+  }
+
+                  </code>
+                </pre>
+                <p>What is the growth of rate here ? O(n + \(n^2)\) ?</p>
+                <p class="fragment">O(\(n^2)\)</p>
+                <p class="fragment">Drop the non-dominant terms</p>
+            </section>
+
+            <section>
+                <h2>Math Recap - Exponents and Lograthims</h2>
+                <p> (\(2^4)\) = 2 * 2 * 2 * 2 = 16 </p>
+                <p> Lograthims are opposite of exponentiation .. </p>
+                <p> We can ask ourselves, given </p>
+                <p> (\(2^x)\) = 16 </p>
+                <p> What is the value of 'x' ? </p>
+                <p> (\(log_2 16)\) = x </p>
+            </section>
+
+            <section>
+                <h2>O(logn)</h2>
+                <p>Divide and Conquer methods still have an increase in growth rate but is not linear</p>
+                <p>Phone book is a good example </p>
+                <p>We will discuss this more when we will do Binary Search</p>
+            </section>
+
+            <section>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>O</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Constant</td>
+                            <td>O(1)</td>
+                        </tr>
+                        <tr>
+                            <td>Logarithmic</td>
+                            <td>O(log n)</td>
+                        </tr>
+                        <tr>
+                            <td>Linear</td>
+                            <td>O(n)</td>
+                        </tr>
+                        <tr>
+                            <td>n log n</td>
+                            <td>nO(log n)</td>
+                        </tr>
+                        <tr>
+                            <td>quadratic</td>
+                            <td>O(\(n^2)\)</td>
+                        </tr>
+                        <tr>
+                            <td>polynomial</td>
+                            <td>O(\(n^k)\) where k >= 1</td>
+                        </tr>
+                        <tr>
+                            <td>exponential</td>
+                            <td>O(\(a^n)\) where a > 1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h2>Space Complexity</h2>
+                <p>An array of size n will have space complexity of O(n)</p>
+                <p>A 2D array will have - O(\(n^2)\)</p>
+            </section>
+
+            <section>
+                <h2>Example 8</h2>
+                <pre>
+                    <code class="hljs" data-trim contenteditable>
+    function sum(n) {
+      if (n <= 0) {
+        return 0;
+      }
+      return n + sum(n-1);
+    }
+
+                    </code>
+                  </pre>
+                <p>What is the growth of rate here ?</p>
+                <p class="fragment">O(n) and O(n)</p>
+
+            </section>
+
         </div>
     </div>
-    <script src="js/reveal.js"></script>
+
     <script>
-        Reveal.initialize();
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
+            // More info https://github.com/hakimel/reveal.js#dependencies
+            math: {
+                mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+                config: 'TeX-AMS_HTML-full' // See http://docs.mathjax.org/en/latest/config-files.html
+            },
+            dependencies: [{
+                src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/lib/js/classList.js',
+                condition: function() {
+                    return !document.body.classList;
+                }
+            }, {
+                src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/plugin/markdown/marked.js',
+                condition: function() {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            }, {
+                src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/plugin/markdown/markdown.js',
+                condition: function() {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            }, {
+                src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/plugin/highlight/highlight.js',
+                async: true,
+                callback: function() {
+                    hljs.initHighlightingOnLoad();
+                }
+            }, {
+                src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/plugin/zoom-js/zoom.js',
+                async: true
+            }, {
+                src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/plugin/notes/notes.js',
+                async: true
+            }, {
+                src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0/plugin/math/math.js',
+                async: true
+            }]
+        });
     </script>
 </body>
 
 </html>
+>
